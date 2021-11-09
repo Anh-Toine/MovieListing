@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:MovieListing.Models"
+    x:DataType="model:Movie"
+    Title="{Binding Title}"
+    x:Class="MovieListing.Views.MovieDetailsPage">
+
+    <ContentPage.Content>
+        <StackLayout> 
+            <Label Text="{Binding Title, StringFormat='Title: {0}'}"/>
+            <Label Text="{Binding Genre, StringFormat='Genre: {0}'}"/>
+            <Label Text="{Binding Image}" HorizontalOptions="Center"/>
+
+            <Button Text="Done" Command="{Binding
+                Path=BindingContext.GoBackCommand,
+                Source={x:Reference MovieDetailsViewModel}}"/>
+
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

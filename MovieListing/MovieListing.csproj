@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />  
+    <PackageReference Include="Xamarin.Essentials" Version="1.6.1" />
+    <PackageReference Include="Refractored.MvvmHelpers" Version="1.6.2" />
+    <PackageReference Include="Xamarin.CommunityToolkit" Version="1.2.0" />
+    <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="AppShell.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="ViewModels\" />
+    <None Remove="Services\" />
+    <None Remove="Models\" />
+    <None Remove="Refractored.MvvmHelpers" />
+    <None Remove="Xamarin.CommunityToolkit" />
+    <None Remove="sqlite-net-pcl" />
+    <None Remove="Data Access\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ViewModels\" />
+    <Folder Include="Services\" />
+    <Folder Include="Models\" />
+    <Folder Include="Data Access\" />
+  </ItemGroup>
+</Project>

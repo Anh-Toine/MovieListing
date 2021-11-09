@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    
+	xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+    xmlns:viewmodels="clr-namespace:MovieListing.ViewModels"
+	x:Name="MyMovieListPage"
+    x:Class="MovieListing.Views.MovieListPage"
+>
+    <ContentPage.BindingContext>
+        <viewmodels:MovieListViewModel/>
+    </ContentPage.BindingContext>
+
+	<ContentPage.ToolbarItems>
+		<ToolbarItem Text="Add"
+				Command="{Binding AddCommand}"/>
+	</ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <RefreshView IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+					 Command="{Binding RefreshCommand}"
+					 RefreshColor="Red">
+
+	        <CollectionView IsGrouped="True"
+							ItemsSource="{Binding MovieGroups}"
+							ItemSizingStrategy="MeasureAllItems"
+							SelectedItem="{Binding SelectedMovie, Mode=TwoWay}"
+							SelectionMode="Single"
+							RemainingItemsThreshold="1"
+							SelectionChangedCommand="{Binding SelectCommand}"
+							RemainingItemsThresholdReachedCommand="{Binding DelayLoadmoreCommand}">
+
+				<CollectionView.ItemsLayout>
+					<GridItemsLayout Orientation="Vertical" Span="{OnIdiom Tablet=2,Phone=1}"/>
+				</CollectionView.ItemsLayout>
+
+				<CollectionView.GroupHeaderTemplate>
+					<DataTemplate>
+						<StackLayout Padding="12">
+							<Label Text="{Binding Key}"/>
+						</StackLayout>
+					</DataTemplate>
+				</CollectionView.GroupHeaderTemplate>
+
+				<CollectionView.EmptyView>
+					<StackLayout Padding="12">
+						<Label HorizontalOptions="Center" Text="No Movies"/>
+					</StackLayout>
+				</CollectionView.EmptyView>
+
+	            <CollectionView.ItemTemplate>
+
+					<DataTemplate>
+						<SwipeView android:SwipeView.SwipeTransitionMode="Drag">
+
+							<SwipeView.RightItems>
+								<SwipeItem
+									BackgroundColor="Orange"
+									Command="{Binding
+									Source={x:Reference MyMovieListPage},
+									Path=BindingContext.FavoriteCommand}"
+									CommandParameter="{Binding .}"
+									Text="Favorite"
+								/>
+
+								<SwipeItem
+									BackgroundColor="Red"
+									IsDestructive="True"
+									Text="Delete"
+									Command="{Binding
+									Source={x:Reference MyMovieListPage},
+									Path=BindingContext.RemoveCommand}"
+									CommandParameter="{Binding .}"
+								/>
+
+							</SwipeView.RightItems>
+
+							<Grid Padding="10">
+								<Frame CornerRadius="20" HasShadow="True">
+								<StackLayout Orientation="Horizontal">
+									<Image Source="{Binding Image}" WidthRequest="66"/>
+									<StackLayout VerticalOptions="Center">
+										<Label Text="{Binding Title}" VerticalOptions="Center"/>
+										<Label Text="{Binding Genre}" VerticalOptions="Center"/>
+										<Label Text="{Binding Id}" VerticalOptions="Center" FontSize="Small"/>
+									</StackLayout>
+								
+								</StackLayout>
+							</Frame>
+							</Grid>
+
+						</SwipeView>
+					</DataTemplate>
+
+				</CollectionView.ItemTemplate>
+
+				<CollectionView.Header>
+					<StackLayout HorizontalOptions="Center" Orientation="Horizontal">
+						<Label
+							FontSize="Medium"
+							Text="Best Movies of the Century"
+							TextColor="Blue"/>
+					</StackLayout>
+				</CollectionView.Header>
+
+				<CollectionView.Footer>
+					<StackLayout HorizontalOptions="Center" Orientation="Horizontal">
+						<Button Text="Load More" Command="{Binding Source={RelativeSource
+							AncestorType={x:Type viewmodels:MovieListViewModel}},
+							Path=LoadmoreCommand}"/>
+
+						<Button Text="Clear All" Command="{Binding Source={RelativeSource
+							AncestorType={x:Type viewmodels:MovieListViewModel}},
+							Path=ClearCommand}"/>
+
+					</StackLayout>
+				</CollectionView.Footer>
+
+	        </CollectionView>
+	    </RefreshView>    
+    </ContentPage.Content>
+</ContentPage>

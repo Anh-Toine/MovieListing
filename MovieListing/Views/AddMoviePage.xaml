@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="MovieListing.Views.AddMoviePage"
+    xmlns:viewmodels="clr-namespace:MovieListing.ViewModels"
+    Title="{Binding Title}">
+
+    <ContentPage.BindingContext>
+        <viewmodels:AddMovieViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+        <StackLayout Padding="20">
+            <Label Text="Title"/>
+            <Entry Text="{Binding MovieTitle}"/>
+            <Label Text="Genre"/>
+            <Entry Text="{Binding Genre}"/>
+            <Label Text="Image"/>
+            <Entry Text="{Binding Image}"/>
+
+            <ActivityIndicator HorizontalOptions="Center"
+                               VerticalOptions="Center"
+                               IsRunning="{Binding IsBusy}"
+                               IsVisible="{Binding IsBusy}"/>
+            <Button Padding="2"
+                    Command="{Binding SaveCommand}"
+                    HorizontalOptions="Center"
+                    VerticalOptions="EndAndExpand"       
+                    Text="Save"/>
+
+        </StackLayout>    
+    </ContentPage.Content>
+</ContentPage>
